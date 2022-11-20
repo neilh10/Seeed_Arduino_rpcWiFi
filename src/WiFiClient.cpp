@@ -229,12 +229,15 @@ int WiFiClient::connect(IPAddress ip, uint16_t port, int32_t timeout)
     FD_SET(sockfd, &fdset);
     tv.tv_sec = 0;
     tv.tv_usec = timeout * 1000;
+    log_d("lwip_connect_r 0x%x 0x%x",serveraddr.sin_addr, serveraddr.sin_port);
 
     int res = lwip_connect_r(sockfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
     if (res < 0 && errno != EINPROGRESS) {
         log_e("connect on fd %d, errno: %d, \"%s\"", sockfd, errno, strerror(errno));
         lwip_close(sockfd);
         return 0;
+    } else {
+        log_d("lwip_connect good");
     }
 
     res = lwip_select(sockfd + 1, nullptr, &fdset, nullptr, timeout<0 ? nullptr : &tv);
@@ -249,6 +252,8 @@ int WiFiClient::connect(IPAddress ip, uint16_t port, int32_t timeout)
     } else {
         int sockerr;
         socklen_t len = (socklen_t)sizeof(int);
+        log_d("lwip_select good %d",res);
+
         res = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &sockerr, &len);
 
         if (res < 0) {
@@ -280,6 +285,7 @@ int WiFiClient::connect(const char *host, uint16_t port, int32_t timeout)
 {
     IPAddress srv((uint32_t)0);
     if(!WiFiGenericClass::hostByName(host, srv)){
+        log_d("hostByName %s %s",host,srv.toString().c_str());
         return 0;
     }
     return connect(srv, port, timeout);

@@ -1079,6 +1079,8 @@ bool HTTPClient::connect(void)
             _client->read();
         }
         return true;
+    } else {
+        log_d("Need to setup connect");
     }
 
 #ifdef HTTPCLIENT_1_1_COMPATIBLE
@@ -1089,7 +1091,10 @@ bool HTTPClient::connect(void)
             return false;
         }
         _client = _tcpDeprecated.get();
-     }
+        log_d("_client _tcpDepreciated");
+     } else {
+        log_d("HTTPCLIENT 1.1 compatible");
+    }
 #endif
 
     if (!_client) {

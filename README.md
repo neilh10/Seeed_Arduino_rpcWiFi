@@ -4,6 +4,11 @@
 
 Seeed Arduino rpcWiFi software library calls Seeed Arduino rpcUnified to implement WiFi function compatibility with Arduino-ESP32. To reduce the cost of using the software, you can import your favorite ESP32 wifi app directly, with minor changes, and then use it. You'll find that your favorite ESP32 app has 5G features, runs on ARM and other architectures.  Hope you like this software and let us know if you have any feedback.
 
+This supports https://github.com/ODM2/ODM2DataSharingPortal/blob/main/doc/example_rest_requests.md
+for sending data to  https://monitormywatershed.org/
+
+Semantic Versioning](https://semver.org/spec/v2.0.0.html). ~ that is on a release its incremented one ahead of main, and then -aaa added
+
 ### **Feature**
 
 - Maximum Compatible with ESP32 wifi library

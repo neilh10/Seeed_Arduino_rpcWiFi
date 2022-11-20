@@ -240,7 +240,7 @@ protected:
     WiFiClient* _client = nullptr;
 
     /// request handling
-    String _host;
+    String _host;  // URL or IP# ~ without http://
     uint16_t _port = 0;
     int32_t _connectTimeout = 2000; // Default timeout: 2000ms
     bool _reuse = true;
